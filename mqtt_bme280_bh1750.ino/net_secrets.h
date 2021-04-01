@@ -1,2 +1,2 @@
-#define SECRET_SSID "SomosRUB"
-#define SECRET_PASS "claro2015"
+#define SECRET_SSID ""
+#define SECRET_PASS ""
