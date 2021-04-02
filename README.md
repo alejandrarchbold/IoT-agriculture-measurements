@@ -1,2 +1,2 @@
 # IoT-agriculture-measurements
-Proyecto
+Proyecto de Fundamentos de Sistemas Digitales
