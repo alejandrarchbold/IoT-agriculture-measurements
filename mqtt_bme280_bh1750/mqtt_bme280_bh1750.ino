@@ -14,8 +14,8 @@ char pass[] = SECRET_PASS;
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
 
-const char broker[] = "192.168.1.106";
-int        port     = 1883;
+const char broker[] = "192.168.20.25";
+int        port     = 1884;
 
 
 String topics[5] = {"pressure", "temp", "hum", "lux", "awita"};
@@ -81,7 +81,7 @@ void loop() {
   mqttClient.poll();
   DigitalRain = analogRead(pinRain);
 
-  //mediciones: [presión en hPa, humedad, temperatura, lux, Llluvia]
+  //mediciones: [presión en hPa, humedad, temperatura, lux, Lluvia]
   double measurement[5] = {bme.readPressure()/100.0F,  bme.readTemperature(), bme.readHumidity(), lightMeter.readLightLevel(), DigitalRain};
 
   //creación de las payload con los datos a ser enviado a cada tema
