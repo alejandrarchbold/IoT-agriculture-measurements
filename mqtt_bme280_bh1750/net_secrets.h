@@ -1,2 +1,2 @@
-#define SECRET_SSID "NASTY 2G"
-#define SECRET_PASS "17062606"
+#define SECRET_SSID ""
+#define SECRET_PASS ""
