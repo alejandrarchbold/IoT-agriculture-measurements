@@ -6,7 +6,7 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 
-#include "/home/alejandra/Desktop/mqtt_bme280_bh1750.ino/net_secrets.h"
+#include "/home/alejandra/Desktop/IoT-agriculture-measurements/mqtt_bme280_bh1750/net_secrets.h"
 
 char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASS;
@@ -18,11 +18,15 @@ const char broker[] = "192.168.1.106";
 int        port     = 1883;
 
 
-String topics[5] = {"pressure", "temp", "hum", "lux"};
+String topics[5] = {"pressure", "temp", "hum", "lux", "awita"};
 String deviceId = "AAL";
 
-Adafruit_BME280 bme;  
-BH1750 lightMeter(0x23);
+Adafruit_BME280 bme; // sensor 1  
+BH1750 lightMeter(0x23); // sensor 2
+
+int pinRain = A0;
+int DigitalRain = 0;
+
 
 void setup(){
   Serial.begin(9600);
@@ -75,22 +79,23 @@ void setup(){
 
 void loop() {
   mqttClient.poll();
+  DigitalRain = analogRead(pinRain);
 
-    //mediciones: [presión en hPa, humedad, temperatura, lux, calidad_aire]
-    double measurement[5] = {bme.readPressure()/100.0F,  bme.readTemperature(), bme.readHumidity(), lightMeter.readLightLevel()};
+  //mediciones: [presión en hPa, humedad, temperatura, lux, Llluvia]
+  double measurement[5] = {bme.readPressure()/100.0F,  bme.readTemperature(), bme.readHumidity(), lightMeter.readLightLevel(), DigitalRain};
 
-    //creación de las payload con los datos a ser enviado a cada tema
-    String payloads[5] = { "", "", "", "" };
+  //creación de las payload con los datos a ser enviado a cada tema
+  String payloads[5] = {"", "", "", "", ""};
 
-    for(int i = 0; i < 4; i++)
-        payloads[i] += measurement[i];
+  for(int i = 0; i < 5; i++)
+    payloads[i] += measurement[i];
   
-        //seteo de las variables para envío del mensaje via protocolo mqtt
+  //seteo de las variables para envío del mensaje via protocolo mqtt
     bool retained = false; 
     int qos = 2; 
     bool dup = false;
   
-    for(int i = 0; i < 4; i++){
+   for(int i = 0; i < 5; i++){
       mqttClient.beginMessage( topics[i]+deviceId, payloads[i].length(), retained, qos, dup);
       mqttClient.print(payloads[i]);
       mqttClient.endMessage();
@@ -100,7 +105,7 @@ void loop() {
       Serial.print("/");
       Serial.print(payloads[i]);
       Serial.println();
-      }
+    }
 
   delay(5000);
 }
