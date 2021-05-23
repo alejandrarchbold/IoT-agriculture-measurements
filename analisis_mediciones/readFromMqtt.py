@@ -7,7 +7,7 @@ import datetime
 def on_connect(client, userdata, flags, rc):
 
     print("Connected with result code "+str(rc))
-    client.subscribe("Esp8266!D4ta/#")              #subscripción a todos los temas de la forma 'Esp8266!D4ta/*'
+    client.subscribe("esp/#")              #subscripción a todos los temas de la forma 'Esp8266!D4ta/*'
 
 def on_message(client, userdata, message):
 
@@ -65,7 +65,7 @@ client = mqtt.Client()
 client.on_message = on_message
 client.on_connect = on_connect
 
-client.username_pw_set(username="bbbtest1", password="bbbtest1_nuncasupecomoseescribe")
+client.username_pw_set(username="aaatest1", password="aaatest1_nuncasupecomoseescribe")
 client.connect(mqttBroker, port) #conexión al broker
 
 client.loop_forever()

@@ -18,7 +18,7 @@ const char broker[] = "192.168.20.25";
 int        port     = 1884;
 
 
-String topics[5] = {"pressure", "temp", "hum", "lux", "awita"};
+String topics[5] = {"pressure/", "temp/", "hum/", "lux/", "awita/"};
 String deviceId = "AAL";
 
 Adafruit_BME280 bme; // sensor 1  
@@ -96,7 +96,7 @@ void loop() {
     bool dup = false;
   
    for(int i = 0; i < 5; i++){
-      mqttClient.beginMessage( topics[i]+deviceId, payloads[i].length(), retained, qos, dup);
+      mqttClient.beginMessage("esp/"+topics[i]+deviceId, payloads[i].length(), retained, qos, dup);
       mqttClient.print(payloads[i]);
       mqttClient.endMessage();
 
