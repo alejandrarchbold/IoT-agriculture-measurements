@@ -1,2 +1,2 @@
-#define SECRET_SSID "linuxEsAmor"
-#define SECRET_PASS "18DebianManjaroUbuntu"
+#define SECRET_SSID ""
+#define SECRET_PASS ""
