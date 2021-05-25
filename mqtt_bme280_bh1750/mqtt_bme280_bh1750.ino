@@ -8,25 +8,27 @@
 
 #include "/home/alejandra/Desktop/IoT-agriculture-measurements/mqtt_bme280_bh1750/net_secrets.h"
 
-char ssid[] = SECRET_SSID;
-char pass[] = SECRET_PASS;
+char ssid[] = SECRET_SSID; // nombre Wi-Fi
+char pass[] = SECRET_PASS; // contraseña Wi-Fi
 
 WiFiClient wifiClient;
-MqttClient mqttClient(wifiClient);
+MqttClient mqttClient(wifiClient); // Cliente Mqtt
 
-const char broker[] = "192.168.20.25";
-int        port     = 1884;
+const char broker[] = "192.168.20.25"; // Ip
+int        port     = 1886; // puerto Mqtt
 
 
-String topics[5] = {"pressure/", "temp/", "hum/", "lux/", "awita/"};
-String deviceId = "AAL";
+String topics[5] = {"pressure/", "temp/", "hum/", "lux/", "awita/"}; // temas para recibir
+String deviceId = "AAL"; 
 
-Adafruit_BME280 bme; // sensor 1  
-BH1750 lightMeter(0x23); // sensor 2
+Adafruit_BME280 bme; // sensor de tem, hum, pressure 
+BH1750 lightMeter(0x23); // sensor de lux
 
-int pinRain = A0;
+int pinRain = A0; // sensor de lluvia
 int DigitalRain = 0;
 
+
+// la guia del codigo es basado en los ejemplos de ArduinoMqttClient (WiFiAdvancedCallback
 
 void setup(){
   Serial.begin(9600);
@@ -49,7 +51,7 @@ void setup(){
   Serial.println("You're connected to the network");
   Serial.println();
 
-  mqttClient.setUsernamePassword("aaatest1", "aaatest1_nuncasupecomoseescribe");
+  mqttClient.setUsernamePassword("aaatest1", "aaatest1_nuncasupecomoseescribe"); // usuario
 
 
   Serial.print("Attempting to connect to the MQTT broker: ");
@@ -90,7 +92,6 @@ void loop() {
   for(int i = 0; i < 5; i++)
     payloads[i] += measurement[i];
   
-  //seteo de las variables para envío del mensaje via protocolo mqtt
     bool retained = false; 
     int qos = 2; 
     bool dup = false;
