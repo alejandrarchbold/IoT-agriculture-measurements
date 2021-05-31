@@ -15,7 +15,7 @@ WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient); // Cliente Mqtt
 
 const char broker[] = "192.168.20.25"; // Ip
-int        port     = 1886; // puerto Mqtt
+int        port     = 1885; // puerto Mqtt
 
 
 String topics[5] = {"pressure/", "temp/", "hum/", "lux/", "awita/"}; // temas para recibir
